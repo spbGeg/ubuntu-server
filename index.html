@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta http-equiv="Content-Type" charset="utf-8" content="text/html">
+<meta name="descripiton" content="Добавление сайта на сервер">
+<title>Добавление сайта на сервер</title>
+</head>
+
+<body>
+
+<p>
+
+А сейчас мы настроим конфиг веб-сервера apache2.
+<br/>
+Для этого введите команду:
+<br/>
+    sudo nano /etc/apache2/sites-available/superdomain.com.conf
+<br/>
+<br/>
+Вводим в файле:<br/>
+<VirtualHost *:80>
+         ServerAdmin webmaster@superdomain.com<br/>
+         ServerName superdomain.com<br/>
+
+         DocumentRoot /var/www/html/superdomain<br/>
+         <Directory /><br/>
+                 Options FollowSymLinks<br/>
+                 AllowOverride All<br/>
+         </Directory><br/>
+         <Directory /var/www/html/superdomain/><br/>
+                 Options Indexes FollowSymLinks MultiViews<br/>
+                 AllowOverride All<br/>
+                 Order allow,deny<br/>
+                 allow from all<br/>
+         </Directory><br/>
+
+         ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/<br/>
+         <Directory "/usr/lib/cgi-bin"><br/>
+                 AllowOverride All<br/>
+                 Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch<br/>
+                 Order allow,deny<br/>
+                 Allow from all<br/>
+         </Directory><br/>
+
+         ErrorLog ${APACHE_LOG_DIR}/error.log<br/>
+
+         # Possible values include: debug, info, notice, warn, error, crit,<br/>
+         # alert, emerg.<br/>
+         LogLevel warn<br/>
+
+         CustomLog ${APACHE_LOG_DIR}/access.log combined<br/>
+</VirtualHost><br/>
+
+</p>
+
+
+
+</body>
+</html>
